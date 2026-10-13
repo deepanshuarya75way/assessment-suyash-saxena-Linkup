@@ -224,6 +224,11 @@ Before submitting changes, verify login, ticket creation, ticket updates, assign
 
 ---
 
+## 🤖 AI-Assisted Development
+
+AI tools were used as development assistants during the project to support debugging, troubleshoot implementation issues, improve code readability, and assist with documentation. The application was tested during development to verify its functionality.
+
+AI served as a supporting tool in the development process, alongside implementation, testing, and review.
 ## 🎯 Project Goal
 
 Linkup aims to simplify IT support operations by bringing ticket creation, assignment, prioritization, and resolution tracking into one centralized platform.
