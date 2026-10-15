@@ -5,7 +5,15 @@ import { User } from "../models/User";
 import type { AuthRequest } from "../middleware/auth";
 
 const allowedStatuses = ["open", "in_progress", "resolved", "closed"];
+const allowedTransitions: Record <string ,string[]> = {
+    open: ["in_progress"],
+    in_progress: ["resolved"],
+    resolved:[],
+    closed:[]
+  };
+
 const allowedPriorities = ["low", "medium", "high", "urgent"];
+
 
 export async function listTickets(req: AuthRequest, res: Response): Promise<void> {
   if (!req.user) {
@@ -113,10 +121,25 @@ export async function updateTicket(req: AuthRequest, res: Response): Promise<voi
   const body = req.body || {};
   if (body.status !== undefined) {
     const status = String(body.status);
+    const currentStatus = String(ticket.status);
+
     if (!allowedStatuses.includes(status)) {
       res.status(400).json({ message: "Invalid status" });
       return;
     }
+
+    if(
+      status !== currentStatus && ! allowedTransitions[currentStatus].includes(status)
+    ) {
+      res.status(400).json({
+        message: `Invalid status transition -> ${status}`,
+      })
+      return
+
+    }
+
+
+    
     ticket.status = status as any;
   }
   if (body.priority !== undefined) {
